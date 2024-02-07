@@ -13,10 +13,6 @@ objects when provided with partial viewpoints.
 
 <img src="img/overview.png" alt="Overview of the system" width = 90%>
 
-## **DATASET**
-
-<img src="img/image.png" alt="" width = 90%>
-
 ## **ARCHITECTURE**
 
 <img src="img/arch.png" alt="Architecture"  width = 90%>
@@ -45,12 +41,47 @@ parameter is crucial as it defines the influence range
 around the objects surface, within which the network
 learns the SDF accurately.
 
+## **DATASET**
+To collect Signed Distance
+Functions (SDFs), we followed the method from
+the original DeepSDF paper[4]. However, due to computational
+concerns, we opted for 10,000 points per object,
+instead of the original 200,000.
+
+In our experiments, data collection time using the
+Nvidia T4 GPU amounted to approximately 3.6 hours
+(220.7 minutes). Notably, reconstructions were significantly
+faster when performed on the GPU compared to
+the CPU.
+
+<img src="img/image.png" alt="" width = 90%>
+
 ## **TRAINING**
-<img src="img/Training_params.png" alt="Architecture" width = 50%>
+Apart from the hyperparameters, the
+orignal implementation seemed to have collected
+200,000 SDF samples and sub-sample 16,384 for each
+optimization iteration while training. Due to the computational
+limitations, we use the 10,000 collected SDF
+samples as is in every iteration.
+
+<img src="img/Training_params.png" alt="Training parameters" width = 50%>
+
+The training process for specific objects exhibited
+varying durations. Training models for Airplane, Bowl,
+Can, and Camera collectively consumed a total of 886.53
+minutes on the single Nvidia A100 GPU. Additionally,
+the training of the Mug model took a total of 188.43 minutes
+on the Nvidia V100 GPU. A total of about 18 hours
+was spent on training all the object categories. These
+findings highlight the efficiency and speed advantages
+associated with GPU acceleration in our experimental
+
+## **INFERENCE**
+<img src="img/inference_time.png" alt="Training parameters" width = 50%>
 
 ## **RESULTS**
 
-<img src="img/Results.png" alt="Execution demo" height=80%>
+<img src="img/Results.png" alt="Sample of results" height=80%>
 
 We showcase a selection of our
 best reconstructions, featuring the ground truth on the
